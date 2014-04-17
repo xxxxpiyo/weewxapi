@@ -5,11 +5,14 @@ import util
 app = Flask(__name__)
 app.debug = True
 
-#g.conf = SafeConfigParser().read("config.ini")
+@app.before_request
+def before_request():
+  g.conf = SafeConfigParser().read("config.ini")
+
 
 @app.route("/")
 def index():
-    
+    data["name"] = g.conf.station
     return render_template("index.html",)
 
 if __name__ == "__main__":
