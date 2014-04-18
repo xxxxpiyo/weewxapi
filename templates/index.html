@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>AmatYr - {{ date["name"] }}</title>
+    <title>AmatYr - {{ data["name"] }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="Tor Hveem">
@@ -42,13 +42,13 @@
                 <li class=""><a href="/day/yesterday">Yesterday</a></li>
                 <li class=""><a href="/hour/week">Week</a></li>
                 <li class=""><a href="/hour/month">Month</a></li>
-                {% for y in years %} 
-                  <li class=""><a href="/year/{{i}}">{{i}}</a></li>
+                {%- for y in data["years"] %}
+                  <li class=""><a href="/year/{{y}}">{{i}}</a></li>
                 {% endfor %}
             </ul>
             <ul class="nav pull-right">
                 <li>
-                    <a class="" href="{{url}}"><i class="icon-globe"></i> {{ name }}</a>
+                    <a class="" href="{{url}}"><i class="icon-globe"></i> {{ data["name"] }}</a>
                 </li>
             </ul>
           </div>
