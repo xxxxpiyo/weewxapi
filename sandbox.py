@@ -2,4 +2,4 @@
 
 import util
 
-print util.getDate(None, "%Y")
+print util.getDate2UT()

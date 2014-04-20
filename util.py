@@ -9,3 +9,12 @@ def getDate(unixTime=None, format="%Y-%m-%d %H:%M:%S"):
     date = datetime.fromtimestamp(unixTime)
 
   return date.strftime(format)
+
+def getDate2UT(date=None):
+    if date == None:
+        d = getDate(None, "%Y-%m-%d")
+    else:
+        d = date
+
+    dt = datetime.datetime.strptime(d + " 00:00:00", "%Y-%m-%d %H:%M:%S")
+    return dt.strftime('%s')
