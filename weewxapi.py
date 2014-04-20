@@ -1,6 +1,6 @@
-from flask import Flask, render_template, g
+from flask import Flask, render_template, g, request
 from ConfigParser import SafeConfigParser
-import util, db
+import util, db, method
 
 app = Flask(__name__)
 app.debug = True
@@ -30,7 +30,40 @@ def index():
 
 @app.route("/api/<path:route>")
 def api(route):
-  return route
+  path = route.split('/')
+  result = 'aho'
+  
+  if path[0] == "max":
+    result = method.max(g.con, request)
+
+  elif path[0] == "record":
+    result = method.record(g.con, request)
+
+  elif path[0] == "year":
+    result = method.year(g.con, request)
+
+  elif path[0] == "now":
+    result = method.now(g.con, request)
+
+  elif path[0] == "day":
+    result = method.day(g.con, request)
+
+  elif path[0] == "recent":
+    result = method.recent(g.con, request)
+
+  elif path[0] == "station":
+    result = method.station(g.con, request)
+
+  elif path[0] == "windhist":
+    result = method.windhist(g.con, request)
+
+  elif path[0] == "hour":
+    result = method.hour(g.con, request)
+
+  elif path[0] == "month":
+    result = method.month(g.con, request)
+
+  return result
 
 if __name__ == "__main__":
     app.run()
