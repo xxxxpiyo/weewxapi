@@ -1,5 +1,6 @@
 from flask import Flask, render_template, g, request
 from ConfigParser import SafeConfigParser
+import json
 import util, db, method
 
 app = Flask(__name__)
@@ -63,7 +64,7 @@ def api(route):
   elif path[0] == "month":
     result = method.month(g.con, request)
 
-  return result
+  return json.dumps(result)
 
 if __name__ == "__main__":
     app.run()
