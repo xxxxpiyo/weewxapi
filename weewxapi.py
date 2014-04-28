@@ -17,17 +17,17 @@ def before_request():
     g.conf.get("db", "password")
   )
 
-@app.route("/")
-def index():
-  data = {}
-  data["name"] = g.conf.get("station", "name")
-  data["years"] = []
-  year = int(util.getDate(None, "%Y"))
-  while year >= int(g.conf.get("station", "firstyear")):
-    data["years"].append(str(year))
-    year = year - 1
-
-  return render_template("index.html", data=data)
+#@app.route("/")
+#def index():
+#  data = {}
+#  data["name"] = g.conf.get("station", "name")
+#  data["years"] = []
+#  year = int(util.getDate(None, "%Y"))
+#  while year >= int(g.conf.get("station", "firstyear")):
+#    data["years"].append(str(year))
+#    year = year - 1
+#
+#  return render_template("index.html", data=data)
 
 @app.route("/api/<path:route>")
 def api(route):
