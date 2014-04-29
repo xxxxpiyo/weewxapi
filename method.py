@@ -76,6 +76,7 @@ def hour(db, r):
     MAX(windgust) AS windgust,
     AVG(winddir) AS winddir,
     AVG(barometer) AS barometer,
+    AVG(altimeter) AS altimeter,
     AVG(outhumidity) AS outhumidity,
     AVG(intemp) AS intemp,
     AVG(inhumidity) AS inhumidity,
@@ -148,7 +149,7 @@ def unitConv(data):
       new_data.update({k:util.getDate(v)})
     elif k in ["windSpeed"]:
       new_data.update({k:mph2mps(v)})
-    elif k in ["UV", "inhumidity", "outhumidity", "windgust", "windspeed", "winddir"]:
+    elif k in ["UV", "inhumidity", "inHumidity", "outhumidity", "outHumidity", "windgust", "windspeed", "winddir"]:
         new_data.update({k:round(float(v),1)})
     else:
         new_data.update({k:v})
