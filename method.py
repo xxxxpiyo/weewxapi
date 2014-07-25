@@ -45,7 +45,53 @@ def now(db, r):
   return [unitConv(result)]
 
 def day(db, r):
-  pass
+  where = getRange(r.args["start"])
+  sql = """SELECT
+    substring(from_unixtime(datetime), 1,10) AS datetime,
+    AVG(outtemp) AS outtemp,
+    MIN(outtemp) AS tempmin,
+    MAX(outtemp) AS tempmax,
+    AVG(dewpoint) AS dewpoint,
+    AVG(rain) AS rain,
+    AVG(windspeed) AS windspeed,
+    MAX(windgust) AS windgust,
+    AVG(winddir) AS winddir,
+    AVG(barometer) AS barometer,
+    AVG(altimeter) AS altimeter,
+    AVG(outhumidity) AS outhumidity,
+    AVG(intemp) AS intemp,
+    AVG(inhumidity) AS inhumidity,
+    AVG(heatindex) AS heatindex,
+    AVG(windchill) AS windchill,
+    AVG(UV) AS UV
+    FROM archive
+    {0}
+    GROUP BY 1
+    ORDER BY datetime 
+  """.format(where)
+
+  sql_result1 = db.select(sql)
+  
+  sql = """
+    SELECT
+      sum(rain) AS dayrain,
+      substring(from_unixtime(datetime), 1,10) AS unit
+    FROM
+      archive
+    {0}
+    group by unit
+  """.format(where)
+
+  sql_result2 = db.select(sql)
+
+  result = []
+  for r2 in sql_result2:
+    for r in sql_result1:
+      if r2["unit"] == r["datetime"]:
+        r.update({"dayrain":r2["dayrain"]})
+        result.append(unitConv(r))
+  return result
+
 def recent(db, r):
   sql = "SELECT * FROM archive ORDER BY datetime DESC LIMIT 60"
   result1 = db.select(sql)
